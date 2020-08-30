@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: dotnetworker-demo
+    namespace: default
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            dotnetworker: web
+    template:
+        metadata:
+            labels:
+                dotnetworker: web
+        spec:
+            containers:
+            - name: dotnetworker-site
+              image: eloekset2/dotnetworker:0.1
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: dotnetworker-entrypoint
+    namespace: default
+spec:
+    type: NodePort
+    selector:
+        dotnetworker: web
+    ports:
+    - port: 54001
+      targetPort: 80
+      nodePort: 30001
