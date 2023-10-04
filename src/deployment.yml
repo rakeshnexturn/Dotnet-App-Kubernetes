@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnetapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnetapp
+  template:
+    metadata:
+      labels:
+        app: dotnetapp
+    spec:
+      containers:
+      - name: dotnetapp-container
+        image: rakeshnexturn/dotnetapp:latest
+        ports:
+        - containerPort: 80
